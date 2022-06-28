@@ -4,11 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Three.js</title>
 
     <link rel="stylesheet" href="css/indexStyle.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="images/icon.png" sizes="96x96">
 </head>
 <body>
+
+    <div class="text-box">
+      <div class="heading">My Three.js Library</div>
+      <div class="button-wrapper">
+          <a href="earth3d.html" class="button" target="_blank">Earth</a>
+      </div>
+    </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r122/three.min.js"></script>
 
@@ -33,9 +43,9 @@
                 Math.random() * 600 - 300,
                 Math.random() * 600 - 300
             );
-            starGeo.vertices.push(star);
             star.velocity = 0;
             star.acceleration = 0.02;
+            starGeo.vertices.push(star);
         }
 
         let sprite = new THREE.TextureLoader().load("images/star.png");
@@ -46,13 +56,13 @@
         });
 
         stars = new THREE.Points(starGeo,starMaterial);
-        stars.rotation.y +=0.002;
         scene.add(stars);
 
 
 
         animate(); 
         }
+
         function animate() {
             starGeo.vertices.forEach(p => {
                 p.velocity += p.acceleration
@@ -64,6 +74,7 @@
                 }
             });
             starGeo.verticesNeedUpdate = true;
+            stars.rotation.y +=0.002;
             renderer.render(scene, camera);
             requestAnimationFrame(animate);
         }
