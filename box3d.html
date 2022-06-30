@@ -9,7 +9,11 @@
 	</head>
 	<body>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r122/three.min.js"></script>
-		<script>
+		<script type="module">
+
+			import * as THREE from './js/threemodule.js';
+			import {OrbitControls} from './js/OrbitControls.js';
+
 			const scene = new THREE.Scene();
 
             const backLoader = new THREE.TextureLoader();
@@ -33,11 +37,18 @@
 
 			camera.position.z = 5;
 
+			var controls = new OrbitControls(camera, renderer.domElement)
+			controls.minDistance = 2.5;
+			controls.maxDistance = 10;
+			controls.screenSpacePanning = true;
+
 			function animate() {
 				requestAnimationFrame( animate );
 
+				/*
 				cube.rotation.x += 0.01;
 				cube.rotation.y += 0.01;
+				*/
 
 				renderer.render( scene, camera );
 			};
