@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r122/three.min.js"></script>
+		<script type="module">
+
+			import * as THREE from './js/threemodule.js';
+			import {OrbitControls} from './js/OrbitControls.js';
+			import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/GLTFLoader.js';
+
+			const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xdddddd);
+
+			const camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
+
+			const renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			var controls = new OrbitControls(camera, renderer.domElement);
+
+            let loadedModel;
+			const glftLoader = new GLTFLoader();
+			glftLoader.load('model3d/scene.gltf', (gltfScene) => {
+				loadedModel = gltfScene;
+				// console.log(loadedModel);
+
+				gltfScene.scene.rotation.y = Math.PI / 8;
+				gltfScene.scene.position.y = 3;
+				gltfScene.scene.scale.set(10, 10, 10);
+				scene.add(gltfScene.scene);
+			});
+
+			const light = new THREE.DirectionalLight(0xffffff, 1);
+			light.position.set(2,2,5);
+			scene.add(light);
+
+			function animate() {
+
+				if (loadedModel) {
+					loadedModel.scene.rotation.x += 0.01;
+					loadedModel.scene.rotation.y += 0.01;
+					loadedModel.scene.rotation.z += 0.01;
+				}
+
+				requestAnimationFrame( animate );
+
+				/*
+				cube.rotation.x += 0.01;
+				cube.rotation.y += 0.01;
+				*/
+
+				renderer.render( scene, camera );
+			};
+
+			animate();
+		</script>
+	</body>
+</html>
