@@ -9,6 +9,7 @@
 	</head>
 	<body>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r122/three.min.js"></script>
+		<script type="module" src="https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/GLTFLoader.js"></script>
 		<script type="module">
 
 			import * as THREE from './js/threemodule.js';
@@ -16,11 +17,10 @@
 			import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/GLTFLoader.js';
 
 			const scene = new THREE.Scene();
-            scene.background = new THREE.Color(0xdddddd);
 
-			const camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
+			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.01, 1000 );
 
-			const renderer = new THREE.WebGLRenderer({antialias:true});
+			const renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
@@ -34,29 +34,18 @@
 
 				gltfScene.scene.rotation.y = Math.PI / 8;
 				gltfScene.scene.position.y = 3;
-				gltfScene.scene.scale.set(10, 10, 10);
+				gltfScene.scene.scale.set(0, 0, 10);
 				scene.add(gltfScene.scene);
 			});
 
-			const light = new THREE.DirectionalLight(0xffffff, 1);
-			light.position.set(2,2,5);
+			scene.background = new THREE.Color(0XFFFFFF);
+
+			const light = new THREE.HemisphereLight(0xffffff, 0x000000, 2);
 			scene.add(light);
+			light.position.set(0,0,10);
 
 			function animate() {
-
-				if (loadedModel) {
-					loadedModel.scene.rotation.x += 0.01;
-					loadedModel.scene.rotation.y += 0.01;
-					loadedModel.scene.rotation.z += 0.01;
-				}
-
 				requestAnimationFrame( animate );
-
-				/*
-				cube.rotation.x += 0.01;
-				cube.rotation.y += 0.01;
-				*/
-
 				renderer.render( scene, camera );
 			};
 
